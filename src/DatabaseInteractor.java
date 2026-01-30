@@ -1,24 +1,20 @@
 // Reads a CSV dataset and saves the items to an ArrayList to use/manipulate
 
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
-import java.io.BufferedReader;
 
 public class DatabaseInteractor {
-    private static final String DELIMITER = ",";
-    private ArrayList<String[]> data; // each line is a String array
+    public static final String DELIMITER = ",";
+    public static final String FILE_NAME = "data.csv";
+    public ArrayList<String[]> data; // each line is a String array
 
     // constructors
     public DatabaseInteractor() {
-        data = null;
+        data = new ArrayList<String[]>();
+        readCSV(FILE_NAME);
     }
 
-    public DatabaseInteractor(String filename) {
-        readCSV(filename);
-    }
-
-    private void readCSV(String filename) {
+    public void readCSV(String filename) {
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             String line;
 
@@ -26,6 +22,18 @@ public class DatabaseInteractor {
                 String[] values = line.split(DELIMITER);
                 data.add(values);
             }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void writeToCSV(String ID, String name, String description) {
+        String[] entry = {ID, name, description};
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, true))) {
+            String line = String.join(DELIMITER, entry);
+            writer.write(line);
+            writer.newLine();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
