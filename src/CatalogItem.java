@@ -13,6 +13,7 @@ public class CatalogItem {
     public String getName() { return name;}
     public String getDesc() { return desc;}
 
+    public void setID() { this.id = id;}
     public void setName() { this.name = name;}
     public void setDesc() { this.desc = desc;}
 }
