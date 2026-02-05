@@ -1,12 +1,16 @@
 import java.util.Scanner;
 
 class Interface {
+
+    private static DatabaseInteractor db = new DatabaseInteractor();
+    private static CatalogService service = new CatalogService(db);
+
     public static void main(String[] args) {
         //Creating Input
         Scanner input=new Scanner(System.in);
         //SystemReadingInput
 
-        int storageInput=0;
+        int storageInput = 0;
 
 
         do{
@@ -21,32 +25,34 @@ class Interface {
             );
 
             //take input
-            storageInput=input.nextInt();
+            storageInput = input.nextInt();
+            input.nextLine();
 
             switch(storageInput){
                 case 1:
                     //View item to list logic
-                        viewItem();
+                    service.viewItem();
                     break;
                 case 2:
                     //Add Item list logic
-                    System.out.print("Enter the name of the item: ");
-                    String itemName=input.nextLine();
-                    itemName=input.nextLine();
+                    System.out.print("Enter item name: ");
+                    String itemName = input.nextLine();
 
-                    System.out.print("Enter the description of the item: ");
-                    String description=input.nextLine();
+                    System.out.print("Enter description: ");
+                    String description = input.nextLine();
 
-                    addItem(itemName,description);
+                    service.addItem(itemName, description);
                     break;
                 case 3:
                     //edit item logic
-                        System.out.print("Enter Item ID: ");
-                        String itemID=input.nextLine();
-                        editItem(itemID);
+                    System.out.print("Enter Item ID: ");
+                    String itemID = input.nextLine();
+
+                    service.editItem(itemID);
                     break;
                 case 4:
                     //Exit input it is empty
+                    System.out.println("Goodbye!");
                     break;
 
                 default:
@@ -55,19 +61,6 @@ class Interface {
 
 
             //end of program
-        }while(storageInput!=4) ; //end of program loop (while)
-    }
-
-    //functions
-    public static void viewItem(){
-        //
-    }
-
-    public static void addItem(String itemName, String itemDesc){
-
-    }
-
-    public static void editItem(String ID){
-        
+        }while(storageInput != 4) ; //end of program loop (while)
     }
 }
